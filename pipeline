@@ -22,5 +22,15 @@ pipeline {
                 sh 'terraform plan -var region="${REGION}"  -var count="${COUNT}" -var instancetype="${TYPE}"  -var SSHKEY="${SSHKEY}" -out=instance'
             }
         }
+        stage("Input from User"){
+            steps{
+                input "Should I move on?"
+            }
+        }
+        stage("Apply"){
+            steps{
+                sh "terraform apply -input=false instance"
+            }
+        }
     }
 }
